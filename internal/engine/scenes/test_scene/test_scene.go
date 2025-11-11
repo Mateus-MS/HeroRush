@@ -13,7 +13,9 @@ func New() engine.Scene {
 		Update: func(engine *engine.Engine) {
 			player.Update(engine)
 			player.Draw()
-			player.DebugDraw()
+			if engine.DebugMode {
+				player.DebugDraw()
+			}
 
 			// UI
 			drawDashCooldown(player.DashCooldown)

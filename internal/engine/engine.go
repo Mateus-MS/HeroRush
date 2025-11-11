@@ -8,19 +8,21 @@ import (
 
 type Engine struct {
 	Viewport mathF.Vector2
-	Scene Scene
-	Keys *Input
+	Scene    Scene
+	Keys     *Input
+
+	DebugMode bool
 }
 
 func New(scn Scene) Engine {
 	return Engine{
 		Viewport: mathF.NewVector2(800, 450),
-		Scene: scn,
-		Keys: NewInput(),
+		Scene:    scn,
+		Keys:     NewInput(),
 	}
 }
 
-func (e Engine) Run(){
+func (e Engine) Run() {
 	rl.InitWindow(e.Viewport.X, e.Viewport.Y, "HeroRush")
 	defer rl.CloseWindow()
 
@@ -30,10 +32,13 @@ func (e Engine) Run(){
 	// Game Loop
 	for !rl.WindowShouldClose() {
 		e.Keys.Update()
+		if e.Keys.IsPressed("F1") {
+			e.DebugMode = !e.DebugMode
+		}
 
 		rl.BeginDrawing()
 		rl.ClearBackground(rl.RayWhite)
-        e.Scene.Update(&e)
+		e.Scene.Update(&e)
 		rl.EndDrawing()
 	}
 }
