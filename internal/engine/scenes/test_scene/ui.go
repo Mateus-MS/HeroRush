@@ -1,5 +1,5 @@
 package test_scene
 
-func drawDashCooldown(){
-	println("as")
+func drawDashCooldown(cooldown int) {
+	// println(cooldown)
 }

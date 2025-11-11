@@ -9,7 +9,7 @@ type Input struct {
 
 func NewInput() *Input {
 	return &Input{
-		Key: createKeyMap(),
+		Key:  createKeyMap(),
 		Keys: make(map[int32]bool),
 	}
 }
@@ -21,17 +21,23 @@ func createKeyMap() map[string]int32 {
 	keyMap["A"] = rl.KeyA
 	keyMap["S"] = rl.KeyS
 	keyMap["D"] = rl.KeyD
+	keyMap["Space"] = rl.KeySpace
 
 	return keyMap
 }
 
-func (i *Input) Update(){
+func (i *Input) Update() {
 	i.Keys[rl.KeyW] = rl.IsKeyDown(rl.KeyW)
 	i.Keys[rl.KeyA] = rl.IsKeyDown(rl.KeyA)
 	i.Keys[rl.KeyS] = rl.IsKeyDown(rl.KeyS)
 	i.Keys[rl.KeyD] = rl.IsKeyDown(rl.KeyD)
+	i.Keys[rl.KeySpace] = rl.IsKeyDown(rl.KeyD)
 }
 
 func (i *Input) IsDown(action string) bool {
 	return i.Keys[i.Key[action]]
+}
+
+func (i *Input) IsPressed(action string) bool {
+	return rl.IsKeyPressed(i.Key[action])
 }

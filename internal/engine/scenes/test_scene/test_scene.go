@@ -7,15 +7,16 @@ import (
 )
 
 func New() engine.Scene {
-	player := player.New() 
+	player := player.New()
 
 	return engine.Scene{
-		Update: func(engine *engine.Engine){
+		Update: func(engine *engine.Engine) {
 			player.Update(engine)
 			player.Draw()
+			player.DebugDraw()
 
 			// UI
-			drawDashCooldown()
+			drawDashCooldown(player.DashCooldown)
 		},
 	}
 }
