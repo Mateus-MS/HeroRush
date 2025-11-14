@@ -59,7 +59,3 @@ func (v Vector2) Normalize() Vector2 {
 	}
 	return v.Div(len)
 }
-
-func (v Vector2) Length() float32 {
-	return float32(math.Sqrt(float64(v.X*v.X + v.Y*v.Y)))
-}

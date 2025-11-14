@@ -62,7 +62,7 @@ func (p *Player) Update(e *engine.Engine) {
 
 	// This is a problem with knockbacks
 	maxSpeed := float32(p.RunSpeed)
-	if p.Velocity.Length() > maxSpeed {
+	if p.Velocity.Len() > maxSpeed {
 		p.Velocity = p.Velocity.Normalize().Mul(maxSpeed)
 	}
 
@@ -87,7 +87,7 @@ func (p Player) DebugDraw() {
 
 		draw_text.Draw(
 			draw_text.Options{
-				Text:     fmt.Sprintf("Position: %d %d", p.Position.X, p.Position.Y),
+				Text:     fmt.Sprintf("Position: %.2f %.2f", p.Position.X, p.Position.Y),
 				Position: pos,
 				Color:    rl.Black,
 				Aligment: draw_text.AligmentStart,
@@ -102,7 +102,7 @@ func (p Player) DebugDraw() {
 
 		draw_text.Draw(
 			draw_text.Options{
-				Text:     fmt.Sprintf("Speed: %d, %d", p.Velocity.X, p.Velocity.Y),
+				Text:     fmt.Sprintf("Speed: %.2f, %.2f", p.Velocity.X, p.Velocity.Y),
 				Position: pos,
 				Color:    rl.Black,
 				Aligment: draw_text.AligmentStart,
