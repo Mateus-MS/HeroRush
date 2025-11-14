@@ -23,7 +23,7 @@ func New(scn Scene) Engine {
 }
 
 func (e Engine) Run() {
-	rl.InitWindow(e.Viewport.X, e.Viewport.Y, "HeroRush")
+	rl.InitWindow(int32(e.Viewport.X), int32(e.Viewport.Y), "HeroRush")
 	defer rl.CloseWindow()
 
 	// Configs

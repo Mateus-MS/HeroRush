@@ -8,8 +8,8 @@ func Draw(opts Options) {
 	}
 
 	rl.DrawCircle(
-		opts.Position.X,
-		opts.Position.Y,
+		int32(opts.Position.X),
+		int32(opts.Position.Y),
 		opts.Radius,
 		opts.Color,
 	)

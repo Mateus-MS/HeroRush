@@ -22,6 +22,7 @@ func createKeyMap() map[string]int32 {
 	keyMap["S"] = rl.KeyS
 	keyMap["D"] = rl.KeyD
 	keyMap["Space"] = rl.KeySpace
+	keyMap["Shift"] = rl.KeyLeftShift
 
 	// Debug/Dev keys
 	keyMap["F1"] = rl.KeyF1
@@ -36,6 +37,7 @@ func (i *Input) Update() {
 	i.Keys[rl.KeyD] = rl.IsKeyDown(rl.KeyD)
 	i.Keys[rl.KeySpace] = rl.IsKeyDown(rl.KeyD)
 	i.Keys[rl.KeyF1] = rl.IsKeyDown(rl.KeyF1)
+	i.Keys[rl.KeyLeftShift] = rl.IsKeyDown(rl.KeyLeftShift)
 }
 
 func (i *Input) IsDown(action string) bool {

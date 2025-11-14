@@ -11,23 +11,28 @@ import (
 )
 
 type Player struct {
-	Position mathF.Vector2
-	Speed    int32
-	Size     float32
+	Position  mathF.Vector2
+	Velocity  mathF.Vector2
+	WalkSpeed int32
+	RunSpeed  int32
+	Size      float32
 
 	DashCooldown int
 }
 
 func New() Player {
 	return Player{
-		Position: mathF.NewVector2(100, 100),
-		Speed:    5,
-		Size:     15,
+		Position:  mathF.NewVector2(100, 100),
+		Velocity:  mathF.NewVector2(0, 0),
+		WalkSpeed: 5,
+		RunSpeed:  10,
+		Size:      15,
 
 		DashCooldown: 100,
 	}
 }
 
+// TODO: re-write this to preserve the knockback
 func (p *Player) Update(e *engine.Engine) {
 	dir := mathF.NewVector2(0, 0)
 	if e.Keys.IsDown("W") {
@@ -43,14 +48,25 @@ func (p *Player) Update(e *engine.Engine) {
 		dir.X += 1
 	}
 
-	if dir.X != 0 || dir.Y != 0 {
-		dir = dir.Normalize()
-		p.Position = p.Position.Add(dir.Mul(p.Speed))
+	var targetSpeed float32 = float32(p.WalkSpeed)
+	if e.Keys.IsDown("Shift") {
+		targetSpeed = float32(p.RunSpeed)
 	}
 
-	if e.Keys.IsPressed("Space") {
-		println("Apertou o dash")
+	if dir.X != 0 || dir.Y != 0 {
+		dir = dir.Normalize()
+		p.Velocity = p.Velocity.Add(dir.Mul(targetSpeed))
+	} else {
+		p.Velocity = p.Velocity.Mul(0.8)
 	}
+
+	// This is a problem with knockbacks
+	maxSpeed := float32(p.RunSpeed)
+	if p.Velocity.Length() > maxSpeed {
+		p.Velocity = p.Velocity.Normalize().Mul(maxSpeed)
+	}
+
+	p.Position = p.Position.Add(p.Velocity)
 }
 
 func (p Player) Draw() {
@@ -86,7 +102,7 @@ func (p Player) DebugDraw() {
 
 		draw_text.Draw(
 			draw_text.Options{
-				Text:     fmt.Sprintf("Speed: %d", p.Speed),
+				Text:     fmt.Sprintf("Speed: %d, %d", p.Velocity.X, p.Velocity.Y),
 				Position: pos,
 				Color:    rl.Black,
 				Aligment: draw_text.AligmentStart,

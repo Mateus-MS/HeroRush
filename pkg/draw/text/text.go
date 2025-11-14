@@ -13,19 +13,22 @@ func Draw(opts Options) {
 		opts.FontSize = DefaultTextSize
 	}
 
+	posX := int32(opts.Position.X)
+	posY := int32(opts.Position.Y)
+
 	switch opts.Aligment {
 	case AligmentCenter:
 		textWidth := rl.MeasureText(opts.Text, opts.FontSize)
-		opts.Position.X -= textWidth / 2
+		posX -= textWidth / 2
 	case AligmentEnd:
 		textWidth := rl.MeasureText(opts.Text, opts.FontSize)
-		opts.Position.X -= textWidth
+		posY -= textWidth
 	}
 
 	rl.DrawText(
 		opts.Text,
-		opts.Position.X,
-		opts.Position.Y,
+		posX,
+		posY,
 		opts.FontSize,
 		opts.Color,
 	)
